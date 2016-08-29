@@ -1,4 +1,4 @@
-/* forcible solution
+/* forcible solution in O(n3)
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
