@@ -1,0 +1,32 @@
+/* forcible solution
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result={};
+        vector<int> temp={};
+        if(nums.size()<3)
+            return result;
+        int i,j,k,m,len;
+        len = nums.size();
+        for(i=0;i<=len-3;++i){
+            for(j=i+1;j<=len-2;++j){
+                for(k=j+1;k<=len-1;++k){
+                    if(nums[i]+nums[j]+nums[k]==0){
+                        
+                        temp = {nums[i],nums[j],nums[k]};
+                        sort(temp.begin(),temp.end());
+                        for(m=0;m<result.size();++m){
+                            if(temp==result[m])
+                                break;
+                        }
+                        if(m==result.size())
+                            result.push_back(temp);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
+*/
+
