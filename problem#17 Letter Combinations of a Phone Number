@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> result = {};
+        if(digits.size())
+            next_digit("",0,digits,result);
+        return result;
+    }
+private:
+    void next_digit(string previous,int pos,string digits,vector<string> &result){
+        vector<string> table = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        int i,row;
+        row = (digits[pos]-'0')-2;
+        if(pos == digits.size()-1){
+            for(i=0;i<=table[row].size()-1;++i)
+                result.push_back(previous + table[row][i]);
+        }
+        else{
+            for(i=0;i<=table[row].size()-1;++i)
+                next_digit(previous + table[row][i],pos+1,digits,result);
+        }
+            
+    }
+};
