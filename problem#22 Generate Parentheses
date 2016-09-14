@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> result;
+        handler(n,1,n,"",result);
+        return result;
+    }
+
+private:
+    void handler(int n,int pos,int rest,string former,vector<string> &result){
+        former+='(';
+        int i;
+        if(pos==n){
+            result.push_back(former.append(rest,')'));
+            return;
+        } 
+        for(i=0;i<=rest+pos-n;++i){
+            if(i)   former.append(1,')');
+            handler(n,pos+1,rest-i,former,result);
+        }
+    }
+};
