@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+ 
+//Normal solution
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int i,n,tempmin,flag(0);
+        ListNode *temp,*result;
+        temp = new ListNode(0);
+        result = temp;
+        while(1){
+            tempmin = 2147483647;
+            flag = 0;
+            for(i=0;i<lists.size();++i){
+                if(lists[i]==NULL)   continue;
+                flag = 1;
+                if(tempmin>lists[i]->val){
+                    tempmin = lists[i]->val;
+                    n = i;
+                }
+            }
+            if(!flag) break;
+            temp->next = new ListNode(tempmin);
+            temp = temp->next;
+            lists[n] = lists[n]->next;
+        }
+        result = result->next;
+        return result;
+    }
+};
+
+//verctor quick sort solution
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        int i;
+        ListNode *result,*temp;
+        result = new ListNode(0);
+        temp = result;
+        vector<int> tank = {};
+        for(i=0;i<lists.size();++i){
+            while(lists[i]!=NULL){
+                tank.push_back(lists[i]->val);
+                lists[i] = lists[i]->next;    
+            }
+        }
+        sort(tank.begin(),tank.end());
+        if(tank.empty())
+            return NULL;
+        for(i=0;i<tank.size()-1;++i){
+            temp->val = tank[i];
+            temp->next = new ListNode(0);
+            temp = temp->next;
+        }
+        temp->val = tank[i];
+        temp->next = NULL;
+        return result;
+    }
+};
