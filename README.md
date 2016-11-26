@@ -1,2 +1,3 @@
 # Leetcode
-Thoughts and implementation of leetcode
+</b>Thoughts and implementation of leetcode<b>
+![sample](leetcodelogo.jpg)
