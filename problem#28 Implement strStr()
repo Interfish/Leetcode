@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int i,len;
+        len = haystack.size()-needle.size()+1;
+        for(i=0;i<len;i++){
+            if(needle==haystack.substr(i,needle.size()))
+                return i;
+        }
+        return -1;
+    }
+};
