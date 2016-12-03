@@ -37,3 +37,26 @@ public:
     }
 };
 //This is a very ugly solution......I have to deal with the special case one by one.
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        const int MIN_INT(-2147483648),MAX_INT(2147483647);
+        if(!divisor||((dividend==MIN_INT)&&(divisor==-1)))    return MAX_INT;
+        int q,quotient(0),sign((dividend^divisor)<0 ? 1:0);
+        long long dis(labs(divisor)),res(labs(dividend)),temp;
+        while(res>=dis){
+            temp = dis;
+            q = 1;
+            while(res>=(temp<<1)){
+                temp <<= 1;
+                q <<= 1;
+            }
+            quotient += q;
+            res -= temp;
+        }
+        return sign ? -quotient:quotient;
+    }
+};
+
+//much more neat!
