@@ -23,7 +23,7 @@ public:
                 q = q << 1;
             }
             temp = temp>>1;
-            temp &= temp & (~-2147483648);
+            temp = temp & (~-2147483648);
             q = q >> 1;
             q = q & (~-2147483648);
             quotient += q;
