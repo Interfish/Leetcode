@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if(!divisor)    return 2147483647;
+        int quotient(0),temp,q;
+        int dis = abs(divisor);
+        if(dividend == -2147483648){
+            if(divisor==-2147483648) return 1;
+            if(divisor==-1) return 2147483647;
+            if(divisor==1) return -2147483648;
+            dividend += dis;
+            quotient += 1;
+        }
+        if(divisor==-2147483648) return 0;
+        int sign(0);
+        if((dividend^divisor)<0)   sign = 1;
+        int res = abs(dividend);
+        while(res>=dis){
+            temp = dis;
+            q = 1;
+            while(res>=temp&&temp>0){
+                temp = temp << 1;
+                q = q << 1;
+            }
+            temp = temp>>1;
+            temp &= temp & (~-2147483648);
+            q = q >> 1;
+            q = q & (~-2147483648);
+            quotient += q;
+            res -= temp;
+        }
+        if(sign){
+            quotient = ~quotient;
+            quotient += 1;
+        }
+        return quotient;
+    }
+};
+//This is a very ugly solution......I have to deal with the special case one by one.
