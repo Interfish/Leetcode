@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int len(words[0].size()),i,j;
+        vector<int> result;
+        vector<string> temp;
+        for(i=0;i<s.size()-len*words.size()+1;++i){
+            temp.clear();
+            temp = words;
+            for(j=i;j<i+len*words.size();j+=len){
+                auto p = find(temp.begin(),temp.end(),s.substr(j,len));
+                if(p==temp.end())    break;
+                else    temp.erase(p);
+            }
+            if(!temp.size())
+                result.push_back(i);
+        }
+        return result;
+    }
+};
