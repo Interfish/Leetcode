@@ -1,4 +1,5 @@
 # Leetcode
+In C++
 </b>Thoughts and implementation of leetcode<b>
 
 
