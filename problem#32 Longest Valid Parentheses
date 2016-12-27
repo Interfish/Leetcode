@@ -1,0 +1,58 @@
+//my solution. In worst case, complexity is n+n-1+n-2+....1;
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        if(!s.size()) return 0;
+        int i(0),j,valid,max(0),temp(0);
+        while(i<s.size()){
+            if(s[i]==')'){
+                i++;
+                continue;
+            }
+            valid = 0;
+            j = i;
+            temp = 0;
+            while(j<s.size()){
+                if(s[j]=='(')   valid++;
+                else    valid--;
+                if(valid==0) temp = j - i + 1;
+                if(valid<0) break;
+                j++;
+            }
+            if(temp>max)   max = temp;
+            i++;
+            if(valid==s.size()) return 0; 
+        }
+        return max;
+    }
+};
+
+//top solution. LEARN A NEW IDEA TO WSIELY USE STACK!!
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.length(), longest = 0;
+        stack<int> st;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(') st.push(i);
+            else {
+                if (!st.empty()) {
+                    if (s[st.top()] == '(') st.pop();
+                    else st.push(i);
+                }
+                else st.push(i);
+            }
+        }
+        if (st.empty()) longest = n;
+        else {
+            int a = n, b = 0;
+            while (!st.empty()) {
+                b = st.top(); st.pop();
+                longest = max(longest, a-b-1);
+                a = b;
+            }
+            longest = max(longest, a);
+        }
+        return longest;
+    }
+};
