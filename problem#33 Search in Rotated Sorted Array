@@ -23,3 +23,4 @@ public:
         return -1;
     }
 };
+//That's a revised bianry search which only finds the no-pivot sorted sequence or leave the problem in half size to next iteration.
