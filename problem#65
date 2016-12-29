@@ -1,0 +1,57 @@
+class Solution {
+public:
+    bool isNumber(string s) {
+        //0, 0.1, 2e10, -3, +4, 1.3e20, -2.3e21, -2e-10, "1 ", " 1", +.8 , 46.e3, 3. are all numeric!
+        int i(s.size()-1),sign(0),e(0),point(0),posE(-1);
+        if(!s.size())   return false;
+        while(s[i]==' ')    i--;
+        s = s.substr(0,i+1);
+        i = 0;
+        if(!s.size())   return false;
+        while(s[i]==' ')    i++;
+        s = s.substr(i);
+        if(!s.size())   return false;
+        for(i=0;i<s.size();++i){
+            if(isDigit(s[i]))   continue;
+            if(s[i]=='+'||s[i]=='-'){
+                if(sign>=2) return false;
+                sign++;
+                if(i==s.size()-1) return false;
+                if(!i)  continue;
+                if(s[i-1]=='e') continue;
+                return false;
+            }
+            if(s[i]=='.'){
+                if(point>=1)    return false;
+                point++;
+                if(posE!=-1){
+                    if(i>posE)  return false;
+                }
+                if(s.size()==1) return false;  
+                if(i==s.size()-1&&!isDigit(s[i-1]))  return false;
+                if(!i) continue;
+                if(isDigit(s[i-1])) continue;
+                if(s[i-1]=='-'||s[i-1]=='+')    continue;
+                return false;
+            }
+            if(s[i]=='e'){
+                if(e>=1)    return false;
+                posE = i;
+                e++;
+                if(i==s.size()-1) return false;
+                if(isDigit(s[i-1])) continue;
+                if(s[i-1]=='.'){
+                    if(i==1)    return false;
+                    continue;
+                }
+                return false;
+            }
+            return false;
+        }
+        return true;
+    }
+    bool isDigit(char c){
+        if(c-'0'>=0&&c-'0'<=9)  return true;
+        else return false;
+    }
+};
