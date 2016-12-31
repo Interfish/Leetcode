@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(!nums.size())    return {-1,-1};
+        int head(0),rear(nums.size()-1),mid,find(-1);
+        while(rear>head+1){
+            mid = (rear + head)/2;
+            if(target>nums[mid])    head = mid;
+            else rear = mid;
+        }
+        if(nums.size()==1){
+            if(nums[0]==target) return {0,0};
+            else return {-1,-1};
+        }
+        if(nums[rear]==target)  find = rear;
+        if(nums[head]==target)  find = head;
+        if(find==-1)    return {-1,-1};
+        mid = find;
+        while(nums[mid]==target&&mid<nums.size())    mid++;
+        mid--;
+        return {find,mid};
+    }
+};
