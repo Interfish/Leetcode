@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        if(!nums.size())    return 0;
+        int front(0),rear(nums.size()-1),mid;
+        while(rear>front+1){
+            mid = (rear + front) / 2;
+            if(target>nums[mid])  front = mid;
+            else rear = mid;
+        }
+        if(nums[rear]==target)    return rear;
+        if(nums[front]==target)   return front;
+        if(nums[rear]<target) return rear+1;
+        if(nums[front]>target)    return 0;
+        return front+1;
+    }
+};
