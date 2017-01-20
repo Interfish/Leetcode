@@ -1,0 +1,74 @@
+class Solution {
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        vector<int> next = find_next(0, -1, board);
+        solver(next[0], next[1], board);
+    }
+    
+    bool solver(int i, int j, vector<vector<char>>& board){
+        int a;
+        vector<int> next = find_next(i ,j, board);
+        vector<char> valid = find_valid(i, j, board);
+        if(next[0]==-1){
+            if(valid.size()==1){
+                board[i][j] = valid[0];
+                return true;
+            }
+            else
+                return false;
+        }
+        for(a=0;a<valid.size();a++){
+            board[i][j] = valid[a];
+            if(solver(next[0],next[1],board))
+                return true;
+        }
+        board[i][j] = '.';
+        return false;
+    }
+    
+    vector<char> find_valid(int i, int j, vector<vector<char>>& board){
+        int a,b;
+        vector<char> result,standard={'1','2','3','4','5','6','7','8','9'};
+        for(a=0;a<9;a++){
+            if(board[a][j]!='.')
+                result.push_back(board[a][j]);
+        }
+        for(b=0;b<9;b++){
+            if(board[i][b]!='.')
+                result.push_back(board[i][b]);
+        }
+        for(a=i/3*3;a<i/3*3+3;a++){
+            for(b=j/3*3;b<j/3*3+3;b++){
+                if(board[a][b]!='.')
+                    result.push_back(board[a][b]);
+            }
+        }
+        sort(result.begin(),result.end());
+        auto last = unique(result.begin(),result.end());
+        result.erase(last,result.end());
+        vector<char> diff;
+        set_difference(standard.begin(),standard.end(),result.begin(),result.end(),inserter(diff,diff.begin()));
+        return diff;
+    }
+    
+    vector<int> find_next(int i, int j, vector<vector<char>>& board){
+        vector<int> result;
+        if(i==8&&j==8)  return {-1,-1};
+        if(j==8){
+            i++;
+            j = 0;
+        }
+        else j++;
+        while(board[i][j]!='.'){
+            if(i>=8&&j>=8)
+                return {-1,-1};
+            if(j==8){
+                j = 0;
+                i++;
+            }
+            else j++;
+        }
+        result.push_back(i);
+        result.push_back(j);
+        return result;
+    }
