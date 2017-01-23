@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string countAndSay(int n) {
+        return next (1, n, "1");
+    }
+    string next(int i, int n, string last){
+        if(i==n)    return last;
+        int a,b(0);
+        string result;
+        char start(last[0]);
+        for(a=0;a<last.size();a++){
+            if(start!=last[a]){
+                result += to_string(b);
+                result += start;
+                start = last[a];
+                b = 1;
+            }
+            else    b++;
+        }
+        result += to_string(b);
+        result += start;
+        return next(i+1, n, result);
+    }
+};
