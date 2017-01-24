@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int> > result;
+        vector<int> current;
+        int left = target;
+        for(int a=0;a<candidates.size();a++)
+            iteration(a, left, current, candidates, result);
+        return result;
+    }
+    
+    void iteration(int i, int left, vector<int> current, vector<int>& candidates, vector<vector<int> >& result){
+        if(candidates[i]>left)    return;
+        current.push_back(candidates[i]);
+        if(candidates[i]==left){
+            result.push_back(current);
+            return;
+        }
+        left -= candidates[i];
+        for(int a=i;a<candidates.size();a++)
+            iteration(a, left, current, candidates, result);
+    }
+};
