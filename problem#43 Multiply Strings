@@ -1,0 +1,48 @@
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        if(num1=="0"||num2=="0")    return "0";
+        string product("0"),sum;
+        int i,j;
+        for(i=0;i<num2.size();i++){
+            sum = "";
+            for(j=0;j<num2[i]-'0';j++)
+                sum = add(sum,num1);
+            for(j=0;j<num2.size()-i-1;j++){
+                sum = sum +"0";
+            }
+            product = add(sum,product);
+        }
+        return product;
+    }
+    
+    string add(string s1,string s2){
+        if(!s1.size())  return s2;
+        if(!s2.size())  return s1;
+        int p,carry(0),dif(s1.size()-s2.size());
+        string result;
+        if(dif>0){
+            for(p=0;p<dif;p++)
+                s2 = "0" + s2;
+        }
+        else if(dif<0){
+            for(p=0;p>dif;p--)
+                s1 = "0" + s1;
+        }
+        p = s1.size()-1;
+        while(p>=0){
+            if(s1[p]+s2[p]+carry-'0'<='9'){
+                result = result + (char)(s1[p]+s2[p]+carry-'0');
+                carry = 0;
+            }
+            else{
+                result = result + (char)(s1[p]+s2[p]+carry-'0'-10);
+                carry = 1;
+            }
+            p--;
+        }
+        if(carry==1)    result = result + '1';
+        reverse(result.begin(),result.end());
+        return result;
+    }
+};
