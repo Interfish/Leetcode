@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > result;
+        if(!nums.size()||nums.size()==1) result.push_back(nums);
+        else iteration({}, nums, result);
+        return result;
+    }
+    
+    void iteration(vector<int> fixed, vector<int> next,vector<vector<int> >& result){
+        if(next.size()==2){
+            vector<int> final;
+            final = fixed;
+            final.push_back(next[0]);
+            final.push_back(next[1]);
+            result.push_back(final);
+            final = fixed;
+            final.push_back(next[1]);
+            final.push_back(next[0]);
+            result.push_back(final);
+            return;
+        }
+        vector<int> copyf,copyn;
+        int i;
+        for(i=0;i<next.size();i++){
+            copyf = fixed;
+            copyf.push_back(next[i]);
+            copyn = next;
+            copyn.erase(copyn.begin()+i);
+            iteration(copyf, copyn, result);
+        }
+    }
+};
