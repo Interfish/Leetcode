@@ -1,3 +1,4 @@
+//regular one, needs more space.
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
@@ -28,6 +29,35 @@ public:
             copyn = next;
             copyn.erase(copyn.begin()+i);
             iteration(copyf, copyn, result);
+        }
+    }
+};
+
+//in-place version, i think is better than above. Less space and complexity.
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > result;
+        if(!nums.size()||nums.size()==1) result.push_back(nums);
+        else iteration(0, nums, result);
+        return result;
+    }
+    
+    void iteration(int i, vector<int>& nums, vector<vector<int> > &result){
+        if(i==nums.size()-2){
+            result.push_back(nums);
+            swap(nums[i],nums[i+1]);
+            result.push_back(nums);
+            swap(nums[i],nums[i+1]);
+            return;
+        }
+        int j;
+        for(j=i;j<nums.size();j++){
+            nums.insert(nums.begin()+i,nums[j]);
+            nums.erase(nums.begin()+j+1);
+            iteration(i+1, nums, result);
+            nums.insert(nums.begin()+j+1,nums[i]);
+            nums.erase(nums.begin()+i);
         }
     }
 };
