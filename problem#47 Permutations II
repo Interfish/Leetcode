@@ -1,0 +1,42 @@
+//with a little to problem#46
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int> > result;
+        if(!nums.size()||nums.size()==1) result.push_back(nums);
+        else{
+            sort(nums.begin(),nums.end());
+            iteration(0, nums, result);   
+        }
+        return result;
+    }
+    
+    void iteration(int i, vector<int>& nums, vector<vector<int> > &result){
+        if(i==nums.size()-2){
+            result.push_back(nums);
+            if(nums[i]!=nums[i+1]){
+                swap(nums[i],nums[i+1]);
+                result.push_back(nums);
+                swap(nums[i],nums[i+1]);
+            }
+            return;
+        }
+        int j,last;
+        for(j=i;j<nums.size();j++){
+            if(i==j){
+                 iteration(i+1, nums, result);
+                 last = j;
+            }
+            else{
+                if(nums[j]!=nums[last]){
+                    nums.insert(nums.begin()+i,nums[j]);
+                    nums.erase(nums.begin()+j+1);
+                    iteration(i+1, nums, result);
+                    nums.insert(nums.begin()+j+1,nums[i]);
+                    nums.erase(nums.begin()+i);
+                    last = j;
+                }
+            }
+        }
+    }
+};
