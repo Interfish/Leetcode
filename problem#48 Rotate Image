@@ -1,0 +1,20 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+        if (matrix.size()==1)   return;
+        int i,j,temp;
+        const int len = matrix.size() - 1;
+        const int rangex = matrix.size()/2 - 1;
+        const int rangey = (matrix.size()-1)/2;
+        for(i=0;i<=rangex;i++){
+            for(j=0;j<=rangey;j++){
+                temp = matrix[i][j];
+                matrix[i][j] = matrix[len-j][i];
+                matrix[len-j][i] = matrix[len-i][len-j];
+                matrix[len-i][len-j] = matrix[j][len-i];
+                matrix[j][len-i] = temp;
+            }
+        }
+        return;
+    }
+};
