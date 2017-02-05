@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<string> eigenvector = strs;
+        vector<string> eigenvector2 ={};
+        vector<vector<string> > result;
+        int i,j,flag;
+        for(i=0;i<eigenvector.size();i++)
+                sort(eigenvector[i].begin(), eigenvector[i].end());
+        for(i=0;i<eigenvector.size();i++){
+            flag = 0;
+            for(j=0;j<eigenvector2.size();j++){
+                if(eigenvector[i]==eigenvector2[j]){
+                    result[j].push_back(strs[i]);
+                    flag = 1;
+                    break;
+                }
+            }
+            if(!flag){ 
+                eigenvector2.push_back(eigenvector[i]);
+                vector<string> temp = {strs[i]};
+                result.push_back(temp);
+            }
+        }
+        return result;
+    }
+};
