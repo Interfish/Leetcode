@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<vector<string>> solveNQueens(int n) {
+        string board(n,'.');
+        vector<int> pos(n);
+        vector<vector<string> > result;
+        iteration(0, board, pos, result);
+        return result;
+    }
+    void iteration(int i, string board, vector<int> pos, vector<vector<string> > & result){
+        int j,k;
+        bool valid;
+        for(j=0;j<board.size();j++){
+            if(board[j]=='.'){
+                valid = true;
+                for(k=0;k<board.size();k++){
+                    if(board[k]=='Q'){
+                        if(abs(k-j)==abs(pos[k]-i)){
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+                if(valid){
+                    string board_temp(board);
+                    vector<int> pos_temp(pos);
+                    board_temp[j] = 'Q';
+                    pos_temp[j] = i;
+                    if(i==board.size()-1){
+                        string temp(board.size(),'.');
+                        vector<string> temp2;
+                        for(int m=0;m<board.size();m++)
+                            temp2.push_back(temp);
+                        for(int m=0;m<board.size();m++)
+                            temp2[pos_temp[m]][m] = 'Q';
+                        result.push_back(temp2);
+                    }
+                    else
+                        iteration(i+1, board_temp, pos_temp, result);
+                }
+            }
+        }
+    }
+};
