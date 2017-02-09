@@ -6,7 +6,7 @@ public:
         for(i=0;i<nums.size();i++){
             sum += nums[i];
             sum-base>result?result = sum - base:0;
-            sum<base?:base = sum:0;
+            sum<base?base = sum:0;
         }
         return result;
     }
