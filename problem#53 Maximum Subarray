@@ -5,10 +5,9 @@ public:
         int i,sum(0),base(0),result(nums[0]);
         for(i=0;i<nums.size();i++){
             sum += nums[i];
-            if(sum-base>result)
-                result = sum - base;
-            if(sum<base)    base = sum;
+            sum-base>result?result = sum - base:0;
+            sum<base?:base = sum:0;
         }
         return result;
     }
-}; 
+};
