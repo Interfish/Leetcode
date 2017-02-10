@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if(!matrix.size())  return {};
+        int m(matrix.size()),n(matrix[0].size()),i,px(0),py(0);
+        vector<int> result;
+        while(result.size()<matrix.size()*matrix[0].size()){
+            if(m==1){
+                for(i=0;i<n;i++){
+                    result.push_back(matrix[py][px]);
+                    px++;
+                }
+            }
+            else if(n==1){
+                for(i=0;i<m;i++){
+                    result.push_back(matrix[py][px]);
+                    py++;
+                }
+            }
+            else{
+                for(i=0;i<n-1;i++){
+                    result.push_back(matrix[py][px]);
+                    px++;
+                }
+                for(i=0;i<m-1;i++){
+                    result.push_back(matrix[py][px]);
+                    py++;
+                }
+                for(i=0;i<n-1;i++){
+                    result.push_back(matrix[py][px]);
+                    px--;
+                }
+                for(i=0;i<m-1;i++){
+                    result.push_back(matrix[py][px]);
+                    py--;
+                }
+                px++;
+                py++;
+                m -= 2;
+                n -= 2;
+            }
+        }
+        return result;
+    }
+};
