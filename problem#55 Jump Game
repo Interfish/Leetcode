@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int brink(0),i;
+        if(!nums.size()||nums.size()==1)    return true;
+        for(i=0;i<nums.size();i++){
+            if(i>brink)   return false;
+            brink = std::max(i + nums[i],brink);
+            if(brink>=nums.size()-1)  return true;
+        }
+        return true;
+    }
+};
