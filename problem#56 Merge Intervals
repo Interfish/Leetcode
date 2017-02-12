@@ -1,0 +1,28 @@
+//complexity O(nlogn) + O(n).
+bool compare(Interval a, Interval b){
+    return a.start < b.start;
+}
+class Solution {
+public:
+    vector<Interval> merge(vector<Interval>& intervals) {
+        if(!intervals.size()||intervals.size()==1)  return intervals;
+        sort(intervals.begin(),intervals.end(),compare);
+        
+        int i,front(intervals[0].start),rear(intervals[0].end);
+        vector<Interval> result;
+        
+        for(i=0;i<intervals.size();i++){
+            if(intervals[i].start>rear){
+                Interval temp(front, rear);
+                result.push_back(temp);
+                front = intervals[i].start;
+                rear = intervals[i].end;
+            }
+            else
+                rear = max(rear, intervals[i].end);
+        }
+        Interval temp(front, rear);
+        result.push_back(temp);
+        return result;
+    }
+};
