@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        if(m<n) swap(m,n);
+        long long a(1),b(1);
+        for(int i=n+m-2;i>m-1;i--)
+            a *= i;
+        for(int i=n-1;i>0;i--)
+            b *= i;
+        return a/b;
+    }
+};
