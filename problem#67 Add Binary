@@ -1,4 +1,4 @@
-//This is a misunderstanding solution. But it's useful
+//This is a misunderstanding solution of decimal adding. But it's useful.
 class Solution {
 public:
     string addBinary(string a, string b) {
@@ -10,6 +10,33 @@ public:
         while(ap||bp){
             if(a[ap]+b[bp]+carry-'0'>'9'){
                 res.insert(0, 1, (char)(a[ap]+b[bp]+carry-'0'-10));
+                carry = 1;
+            }
+            else{
+                res.insert(0, 1, (char)(a[ap]+b[bp]+carry-'0'));
+                carry = 0;
+            }
+            if(ap) ap--;
+            if(bp) bp--;
+        }
+        if(carry==1)
+            res.insert(0, 1, '1');
+        return res;
+    }
+};
+
+//the correct one
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        a.insert(0, 1, '0');
+        b.insert(0, 1, '0');
+        int ap(a.size()-1),bp(b.size()-1),carry(0);
+        string res;
+        
+        while(ap||bp){
+            if(a[ap]+b[bp]+carry-'0'>'1'){
+                res.insert(0, 1, (char)(a[ap]+b[bp]+carry-'0'-2));
                 carry = 1;
             }
             else{
