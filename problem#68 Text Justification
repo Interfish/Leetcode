@@ -1,0 +1,43 @@
+//O(n), I hate this type of quesiton.
+class Solution {
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        int p(0),q(0),n(0);
+        vector<string> res;
+        
+        while(q<words.size()){
+            if(n+q-p+words[q].size()>maxWidth){
+                int rs,lsi,i;
+                rs = q-1-p?(maxWidth-n)/(q-1-p):maxWidth-n;
+                lsi = q-1-p?(maxWidth-n)%(q-1-p):0;
+                string rspace(rs, ' '),temp;
+                if(q-1-p){
+                    for(i=p;i<q-1;i++){
+                        temp += words[i];
+                        if(i+1-p<=lsi)
+                            temp += rspace + " ";
+                        else
+                            temp += rspace;
+                    }
+                    temp += words[q-1];
+                }
+                else
+                    temp += words[q-1] + rspace;
+                res.push_back(temp);
+                p = q;
+                n = words[q].size();
+            }
+            else
+                n += words[q].size();
+            q++;
+        }
+        string temp;
+        for(int i=p;i<q-1;i++)
+            temp += words[i] + " ";
+        temp += words[q-1];
+        while(temp.size()<maxWidth)
+            temp += " ";
+        res.push_back(temp);
+        return res;
+    }
+};
