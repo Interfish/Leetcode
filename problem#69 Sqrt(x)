@@ -1,0 +1,18 @@
+//I found this solution in
+https://en.wikipedia.org/wiki/Fast_inverse_square_root and http://www.cnblogs.com/pkuoliver/archive/2010/10/06/sotry-about-sqrt.html
+In QUAKE III, they found a very fast way to calculate square root with a magic number 0x5f375a86
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        float y(x);
+        float yhalf = 0.5f*y;
+	int i = *(int*)&y; // get bits for floating VALUE 
+	i = 0x5f375a86- (i>>1); // gives initial guess y0
+        y = *(float*)&i; // convert bits BACK to float
+	y = y*(1.5f-yhalf*y*y); // Newton step, repeating increases accuracy
+	y = y*(1.5f-yhalf*y*y);
+	y = 1/y;
+	return (int)y*(int)y>x?(int)y-1:(int)y; // to comply with task's requirement
+    }
+};
