@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        vector<string> stack;
+        string res;
+        int a(0),b(0);
+        
+        while(b<path.size()){
+            a = b++;
+            while(b<path.size()&&path[b]!='/')
+                b++;
+            string temp = path.substr(a+1,b-a-1);
+            if(temp == ".");
+            else if(temp == ".."){
+                if(!stack.empty())
+                    stack.pop_back();
+            }
+            else if(temp.empty());
+            else
+                stack.push_back(temp);
+        }
+        if(!stack.size())   return "/";
+        for(a=0;a<stack.size();a++){
+            res += '/';
+            res += stack[a];
+        }
+        return res;
+    }
+};
