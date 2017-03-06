@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(!matrix.size()||!matrix[0].size())  return false;
+        int i(0),j(matrix.size()-1),mid,row;
+        while(j-i>1){
+            mid = (i + j) / 2;
+            if(matrix[mid].back()>target)
+                j = mid;
+            else
+                i = mid;
+        }
+        if(target<=matrix[i].back())
+            row = i;
+        else
+            row = j;
+        i = 0;
+        j = matrix[row].size()-1;
+        while(j-i>1){
+            mid = (i + j) / 2;
+            if(matrix[row][mid]>target)
+                j = mid;
+            else
+                i = mid;
+        }
+        if(matrix[row][i]==target||matrix[row][j]==target)
+            return true;
+        return false;
+    }
+};
