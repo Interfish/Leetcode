@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        if(!nums.size())    return;
+        int head(0),p;
+        while(nums[head]==0)    head++;
+        p = head+1;
+        for(;p<nums.size();p++){
+            if(nums[p]!=0);
+            else{
+                swap(nums[p], nums[head]);
+                head++;
+            }
+        }
+        while(nums[head]==1)    head++;
+        p = head + 1;
+        for(;p<nums.size();p++){
+            if(nums[p]!=1);
+            else{
+                swap(nums[p], nums[head]);
+                head++;
+            }
+        }
+        return;
+    }
+    
+};
