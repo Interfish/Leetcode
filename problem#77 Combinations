@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        if(k>n||k==0||n==0) return {{}};
+        
+        int a[n],p[k+1];
+        vector<vector<int> > res;
+        
+        for(int i=0;i<n;i++)
+            a[i] = i+1;
+        for(int i=0;i<k;i++)
+            p[i] = i;
+        p[k] = n;
+        vector<int> first;
+        for(int i=0;i<k;i++)
+            first.push_back(a[p[i]]);
+        res.push_back(first);
+        if(k==n)    return res;
+        while(findNext(n, k, p)){
+            vector<int> temp;
+            for(int i=0;i<k;i++)
+                temp.push_back(a[p[i]]);
+            res.push_back(temp);
+        }       
+        
+        return res;
+    }
+    
+    bool findNext(const int& n, const int& k, int * p){
+        for(int i=k-1;i>=0;i--){
+            if(p[i+1]-p[i]>=2){
+                p[i]++;
+                for(int j=i+1;j<k;j++)
+                    p[j] = p[j-1] + 1;
+                return true;
+            }
+        }
+        return false;
+    }
+};
