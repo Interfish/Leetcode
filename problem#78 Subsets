@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        if(!nums.size())    return {{}};
+        vector<vector<int> > res;
+        for(int i=0;i<=nums.size();i++)
+            combination(nums, i, res);
+        return res;
+    }
+    
+    void combination(vector<int>& nums, int k, vector<vector<int> >& res){
+        if(!k){
+            res.push_back({});
+            return;
+        }
+        int a[k]={0};
+        int n(nums.size()),i(0);
+        while (i >= 0) {
+			a[i]++;
+			if (a[i] > n) --i;
+			else if (i == k - 1){
+			    vector<int> temp;
+			    for(int j=0;j<k;j++)
+			        temp.push_back(nums[a[j]-1]);
+			    res.push_back(temp);
+			}
+			else {
+			    ++i;
+			    a[i] = a[i - 1];
+			}
+		}
+    }
+};
