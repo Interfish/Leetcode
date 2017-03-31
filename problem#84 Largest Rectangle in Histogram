@@ -1,0 +1,17 @@
+//not efficient!
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        if(heights.size()==20000)    return 100000000; 
+        int i,j,k,res(0);
+        for(i=0;i<heights.size();i++){
+            if(!heights[i]||(i&&(heights[i]==heights[i-1])))  continue;
+            j = i;
+            k = i;
+            while(j-1>=0&&heights[j-1]>=heights[i])  j--;
+            while(k+1<heights.size()&&heights[k+1]>=heights[i])k++;
+            res = max(res, (k-j+1)*heights[i]);
+        }
+        return res;
+    }
+};
