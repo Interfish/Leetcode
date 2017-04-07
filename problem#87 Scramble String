@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool sameWords(string & s1, string & s2){
+        int i;
+        map<char, int> comp1,comp2;
+        for(i=0;i<s1.size();i++)
+            comp1[s1[i]]++;
+        for(i=0;i<s2.size();i++)
+            comp2[s2[i]]++;
+        return comp1==comp2;
+    }
+    
+    bool isScramble(string s1, string s2) {
+        if(s1.size()!=s2.size())    return false;
+        if(!s1.size()&&!s2.size())  return true;
+        if((s1.size()==1)&&(s2.size()==1))  return s1==s2;
+        int i;
+        for(int i=0;i<s1.size()-1;i++){
+            string sa(s1.substr(0, i+1)),sb(s1.substr(i+1)),sc(s2.substr(0, i+1)),sd(s2.substr(i+1)),se(s2.substr(0, s2.size()-i-1)),sf(s2.substr(s2.size()-i-1));
+            
+            if(sameWords(sa, sc)){
+                if(sameWords(sb, sd)){
+                    if(isScramble(sa, sc)&&isScramble(sb, sd))
+                        return true;
+                }
+            }
+            if(sameWords(sa, sf)){
+                if(sameWords(sb, se)){
+                    if(isScramble(sa, sf)&&isScramble(sb, se))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+};
