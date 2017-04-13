@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void iteration(int start, int rest, vector<int> & nums, vector<int> & last, vector<vector<int> > & res){
+        for(int i=start;i<=nums.size()-rest;i++){
+            if(i>0&&i!=start&&nums[i]==nums[i-1])    continue;
+            if(rest==1){
+                vector<int> temp(last);
+                temp.push_back(nums[i]);
+                res.push_back(temp);
+            }
+            else{
+                vector<int> temp(last);
+                temp.push_back(nums[i]);
+                iteration(i+1, rest-1, nums, temp, res);
+            }
+        }
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        if(!nums.size())    return {{}};
+        vector<vector<int> > res;
+        vector<int> empty = {};
+        res.push_back({});
+        sort(nums.begin(), nums.end());
+        for(int i=1;i<=nums.size();i++)
+            iteration(0, i, nums, empty, res);
+        return res;
+    }
+};
