@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void iteration(string & s, int & count, int pos){
+        if(pos>=s.size()){
+            count++;
+            return;
+        }
+        if(pos<=(int)s.size()-2){
+            if(s[pos]=='1'||(s[pos]=='2'&&s[pos+1]<='6'))
+                iteration(s, count, pos+2);
+        }
+        if(s[pos]=='0') return;
+        iteration(s, count, pos+1);
+    }
+    
+    int numDecodings(string s) {
+        if(!s.size())   return 0;
+        int count(0);
+        iteration(s, count, 0);
+        return count;
+    }
+};
