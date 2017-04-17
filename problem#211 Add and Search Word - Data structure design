@@ -1,0 +1,62 @@
+class WordDictionary {
+public:
+    /** Initialize your data structure here. */
+    struct trieNode{
+        bool isKey;
+        struct trieNode* b[26];
+        trieNode(){
+            isKey = false;
+            memset(b, NULL, 26*sizeof(trieNode*));
+        }
+    };
+    
+    struct trieNode* root;
+    
+    WordDictionary() {
+        root = new trieNode();
+    }
+    
+    /** Adds a word into the data structure. */
+    void addWord(string word) {
+        struct trieNode* p = root;
+        for(int i=0;i<word.size();i++){
+            if((p->b[word[i]-'a'])==NULL)
+                p->b[word[i]-'a'] = new trieNode();
+            p = p->b[word[i]-'a'];
+        }
+        p->isKey = true;
+    }
+    
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    bool search(string word) {
+        return find(word, root);
+    }
+    
+    bool find(string word, trieNode* p){
+        for(int i=0;i<word.size();i++){
+            if(word[i]!='.'){
+                if(p->b[word[i]-'a']==NULL)
+                    return false;
+                else
+                    p = p->b[word[i]-'a'];
+            }
+            else{
+                for(int j=0;j<26;j++){
+                    if(p->b[j]!=NULL){
+                        if(find(word.substr(i+1), p->b[j]))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return p->isKey;
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * bool param_2 = obj.search(word);
+ */
