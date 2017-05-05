@@ -1,0 +1,51 @@
+//O(n2) common solution
+
+//O(nlog(n))
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        if(!nums.size()||nums.size()==1)    return {};
+        
+        vector<int> copy(nums);
+        sort(nums.begin(), nums.end());
+        int p1(0),p2(nums.size()-1);
+        vector<int> res;
+        
+        while(p2>p1){
+            if(nums[p1]+nums[p2]>target)
+                p2--;
+            else if(nums[p1]+nums[p2]<target)
+                p1++;
+            else{
+                for(int i=0;i<copy.size();i++)
+                    if(copy[i]==nums[p1]||copy[i]==nums[p2]) res.push_back(i);
+                break;
+            }
+        }
+        if(res[0]>res[1])   swap(res[0], res[1]);
+        return res;
+    }
+};
+
+//O(n)? claim to be, but with doubt
+vector<int> twoSum(vector<int> &numbers, int target)
+{
+    //Key is the number and value is its index in the vector.
+	unordered_map<int, int> hash;
+	vector<int> result;
+	for (int i = 0; i < numbers.size(); i++) {
+		int numberToFind = target - numbers[i];
+
+            //if numberToFind is found in map, return them
+		if (hash.find(numberToFind) != hash.end()) {//it claims find() will run in constant times, but some say it is not so good.
+                    //+1 because indices are NOT zero based
+			result.push_back(hash[numberToFind] + 1);
+			result.push_back(i + 1);			
+			return result;
+		}
+
+            //number was not found. Put it in the map.
+		hash[numbers[i]] = i;
+	}
+	return result;
+}
