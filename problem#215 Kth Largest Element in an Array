@@ -1,4 +1,4 @@
-//partial quick sort. O(nlogn)
+//partial quick sort. O(nlogk)
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
