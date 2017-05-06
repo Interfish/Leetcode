@@ -1,0 +1,30 @@
+//partial quick sort. O(nlogn)
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int start(0),end(nums.size()-1),res(-1);
+        while(res!=k-1){
+            res = partialqsort(nums, start, end);
+            cout << res << end;
+            if(res>k-1)
+                end = (res==end?end-1:res);
+            else if(res<k-1)
+                start = (res==start?start+1:res);
+        }
+        return nums[res];
+    }
+    int partialqsort(vector<int>& nums, int start, int end){
+        int p,i(start);
+        if(start==end)  return start;
+        swap(nums[(start+end)/2], nums[end]);
+        while(i<=end&&nums[i]>=nums[end])   i++;
+        p = i;
+        for(;i<=end;i++){
+            if(nums[i]>=nums[end]){
+                swap(nums[i],nums[p]);
+                p++;
+            }
+        }
+        return p-1;
+    }
+};
