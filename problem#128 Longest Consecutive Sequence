@@ -1,0 +1,21 @@
+//use hashmap to store which can decrease serching time from O(n) to O(1)
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        if(!nums.size()) return 0;
+        unordered_map<int, int> map;
+        int maximum(1);
+        for(int i=0;i<nums.size();i++)
+                map[nums[i]] = 1;
+        for(int i=0;i<nums.size();i++){
+            int temp = nums[i];
+            int k = 1;
+            if(map.find(temp-1)!=map.end())
+                continue;
+            while(map.find((temp++)+1)!=map.end())
+                k++;
+            maximum = max(maximum, k);
+        }
+        return maximum;
+    }
+};
