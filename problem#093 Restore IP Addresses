@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<string> restoreIpAddresses(string s) {
+        if(!s.size())   return {};
+        vector<string> result;
+        iteration(s, "", result, 0, 0);
+        return result;
+    }
+    
+    void iteration(string & s, string last, vector<string> & result, int pos, int dot){
+        const int remain = (s.size() - pos);
+        int max = min(pos+2,(int)s.size()-1);
+        if(remain<4-dot||remain>3*(4-dot))  return;
+        if(dot==3){
+            if(check(s,pos,s.size()-1))     result.push_back(last+s.substr(pos));
+            return;
+        }
+        for(int i=pos;i<=max;i++)
+            if(check(s,pos,i))  iteration(s, last+s.substr(pos, i-pos+1)+".", result, i+1, dot+1);
+    }
+    
+    bool check(string & s, int start, int end){
+        if(start==end)  return true;
+        else if(start==end-1&&s[start]!='0') return true;
+        else if(start==end-2){
+            if(s[start]=='1')   return true;
+            else if(s[start]=='2'){
+                if(s[start+1]<'5')  return true;
+                else if(s[start+1]=='5')    return s[end]<='5';
+            }
+        }
+        return false;
+    }
+};
