@@ -26,3 +26,25 @@ public:
     }
 };
 
+//DP solution. Whether s3[0:i+j] is interleaving of s1[0:i] and s2[0:j] is determined by two ways:
+//a. s3[0:i+j-1] is interleaving of s1[0:i-1] and s2[0:j] && s1[i] == s3[i+j]//
+//b. s3[0:i+j-1] is interleavinf of s2[0:j-1] and s1[0:i] && s2[j] == s3[i+j]
+
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        bool dp[s2.size()+1][s1.size()+1];
+        for(int i=1;i<s1.size()+1;i++)  dp[0][i] = (s1.substr(0,i)==s3.substr(0,i));
+        for(int j=1;j<s2.size()+1;j++)  dp[j][0] = (s2.substr(0,j)==s3.substr(0,j));
+        dp[0][0] = true;
+        for(int j(1);j<s2.size()+1;j++){
+            for(int i(1);i<s1.size()+1;i++){
+                if(dp[j][i-1]&&s1[i-1]==s3[i+j-1])  dp[j][i] = true;
+                else if(dp[j-1][i]&&s2[j-1]==s3[i+j-1]) dp[j][i] = true;
+                else
+                    dp[j][i] = false;
+            }
+        }
+        return s1.size()+s2.size()==s3.size()?dp[s2.size()][s1.size()]:false;
+    }
+};
