@@ -1,0 +1,28 @@
+//brutal force
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        if(s1=="")  return s2==s3;
+        if(s2=="")  return s1==s3;
+        if(s3=="")  return false;
+        return iteration(0, 0, 0, s1, s2, s3);
+    }
+    bool iteration(int pos1, int pos2, int pos, string & s1, string & s2, string & s3){
+        if(pos>=s3.size()){
+            if(pos1==s1.size()&&pos2==s2.size())
+                return true;
+            else
+                return false;
+        }
+        if(pos1<s1.size()&&s1[pos1] == s3[pos]){
+            if(iteration(pos1+1, pos2, pos+1, s1, s2, s3))
+                return true;
+        }
+        if(pos2<s2.size()&&s2[pos2] == s3[pos]){
+            if(iteration(pos1, pos2+1, pos+1, s1, s2, s3))
+                return true;
+        }
+        return false;
+    }
+};
+
