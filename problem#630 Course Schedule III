@@ -1,0 +1,22 @@
+//brutal force back tracking
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int>>& courses) {
+        int max(0);
+        bool used[courses.size()];
+        for(int i(0);i<courses.size();i++)
+            used[i] = true;
+        iteration(0, courses, max, 1, used);
+        return max;
+    }
+    void iteration(int count, vector<vector<int>> & courses, int & max, int start, bool * used){
+        for(int i(0);i<courses.size();i++){
+            if(courses[i][1]-courses[i][0]+1>=start&&used[i]){
+                if(count+1>max)   max = count+1;
+                used[i] = false;
+                iteration(count+1, courses, max, start+courses[i][0], used);
+                used[i] = true;
+            }
+        }
+    }
+};
