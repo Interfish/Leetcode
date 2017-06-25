@@ -20,3 +20,33 @@ public:
         }
     }
 };
+
+//greedy approach
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int>>& courses) {
+        // sort courses by the end date
+        sort(courses.begin(),courses.end(),
+            [](vector<int> a, vector<int> b){return a.back()<b.back();});
+            
+        multiset<int> cls; // store lengths of each course we take (could be duplicates!)
+        int cursum=0;
+        
+        for (int i=0; i<courses.size(); i++) {
+            
+            // if we have enough time, we will take this course
+            if (cursum+courses[i].front()<=courses[i].back()) {
+                cls.insert(courses[i].front());
+                cursum+=courses[i].front();
+            } else if (*cls.rbegin()>courses[i].front()) {
+                // if we don't have enough time, we switch out a longer course
+                cursum+=courses[i].front()-*cls.rbegin();
+                cls.erase(--cls.end());
+                cls.insert(courses[i].front());
+            } // if we don't have enough time for course[i], 
+              //and it's longer than any courses taken, then we ignore it
+        }
+        
+        return cls.size();
+    }
+};
