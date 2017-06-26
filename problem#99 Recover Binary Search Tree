@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void recoverTree(TreeNode* root) {
+        deque<TreeNode*> check;
+        TreeNode min_int(INT_MIN);
+        for(int i(0);i<3;i++)
+            check.push_back(&min_int);
+        vector<TreeNode*> swp;
+        traversal(root, check, swp);
+        if(swp.size()<2)
+                swp.push_back(check[2]);
+        int temp(swp[0]->val);
+        swp[0]->val = swp[1]->val;
+        swp[1]->val = temp;
+    }
+    void traversal(TreeNode* root, deque<TreeNode*> & check, vector<TreeNode*> & swp){
+        if(root==NULL)  return;
+        traversal(root->left, check, swp);
+        check.pop_front();
+        check.push_back(root);
+        if((check[1]->val>check[0]->val&&check[1]->val>check[2]->val)||(check[1]->val<check[0]->val&&check[1]->val<check[2]->val))
+            swp.push_back(check[1]);
+        traversal(root->right, check, swp);
+    }
+};
