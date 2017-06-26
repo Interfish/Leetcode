@@ -1,0 +1,40 @@
+//property of tree: if you know any two of preorder, inorder, postorder of a tree, you can know the structure of that tree.
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        vector<int> p_pre,p_post,q_pre,q_post;
+        preorder(p, p_pre);
+        preorder(q, q_pre);
+        postorder(p, p_post);
+        postorder(q, q_post);
+        if(p_pre==q_pre&&p_post==q_post)    return true;
+        return false;
+    }
+    void preorder(TreeNode* root, vector<int> & seq){
+        if(root==NULL){
+            seq.push_back(INT_MIN);
+            return;
+        }
+        seq.push_back(root->val);
+        preorder(root->left, seq);
+        preorder(root->right,seq);
+    }
+    void postorder(TreeNode* root, vector<int> & seq){
+        if(root==NULL){
+            seq.push_back(INT_MIN);
+            return;
+        }
+        postorder(root->left, seq);
+        postorder(root->right, seq);
+        seq.push_back(root->val);
+    }
+};
