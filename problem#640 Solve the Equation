@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string solveEquation(string equation) {
+        int i=0;
+        for(;i<equation.size();i++){
+            if(equation[i]=='=')    break;
+        }
+        vector<int> left = simplify(equation.substr(0, i-0));
+        vector<int> right = simplify(equation.substr(i+1));
+        cout << left[0] <<' ' << left[1] << ' '<< right[0] << ' '<< right[1];
+        if(left[0]-right[0]==0){
+            if(right[1]-left[1]==0) return "Infinite solutions";
+            else    return "No solution";
+        }
+        int ret = (right[1] - left[1])/(left[0] - right[0]);
+        return "x=" + to_string(ret);
+    }
+    vector<int> simplify(string form){
+        vector<int> ret = {0,0};
+        if(form[0]!='-')    form = "+" + form + "f";
+        int i(0);
+        while(i<form.size()-1){
+            int sign;
+            if(form[i]=='+') sign = 1;
+            else    sign = -1;
+            i++;
+            int s(i),factor;
+            while(form[i]<='9'&&form[i]>='0')   i++;
+            if(i==s)    factor = 1;
+            else    factor = stoi(form.substr(s,i-s));
+            cout << form.substr(s,i-s) << endl;
+            if(form[i]=='x'){
+                ret[0] += sign * factor;
+                i++;
+            }    
+            else    ret[1] += sign * factor;
+        }
+        return ret;
+    }
+};
