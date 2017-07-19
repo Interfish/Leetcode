@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size()<2) return 0;
+        int lowbase(prices[0]),profit(0);
+        for(int i(1);i<prices.size();i++){
+            if(prices[i]-lowbase>profit)    profit = prices[i]-lowbase;
+            if(prices[i]<lowbase)   lowbase = prices[i];
+        }
+        return profit;
+    }
+};
